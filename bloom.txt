@@ -1,3 +1,43 @@
+"""
+import numpy as np
+bit_vector=np.zeros(101)
+h1=[]
+h2=[]
+h3=[]
+for i in range(5):
+  val=int(input(f"Enter your element {i+1} : "))
+  H_1 = (val+1) % 101
+  H_2 = (val**3+3) % 101
+  H_3 = (val+5) % 101
+
+  bit_vector[H_1]=1
+  bit_vector[H_2]=1
+  bit_vector[H_2]=1
+
+for i , j ,k in zip(h1,h2,h3):
+  print(i,j,k)
+print("Bit Vector : ",bit_vector)
+
+def verify(x):
+    H_1 = (x+1) % 101
+    H_2 = (x**3+3) % 101
+    H_3 = (x+5) % 101
+    if bit_vector[H_1]==1 and bit_vector[H_2]==1 and bit_vector[H_2]==1 :
+      print(f"Value {x} is present")
+    else:
+      print(f"Value {x} is not present")
+q=0
+while True:
+  try:
+    q=int(input(f"Enter element to search : "))
+    verify(q)
+  except:
+    print('STOPPED')
+    break
+
+"""
+
+
 names = ["Jay","Bhavesh","Vednt","Onkar","Smit","Kriyanshi",
          "Hritika","Satyhyaprakash","Gurshish","Swaroop","Satish"]
 test_names = ["Jay", "Bhavesh", "Amish", "Nishant"]
