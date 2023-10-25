@@ -80,3 +80,45 @@ def print_nested_list(nested_list):
             print_nested_list(item)
         else:
             print(item)
+
+"""
+def generate_k_shingles(text, k):
+    shingles = []
+    text = text.replace("\n", " ")
+    for i in range(len(text) - k + 1):
+        shingle = text[i:i+k]
+        shingles.append(shingle)
+    return shingles
+
+def create_incident_matrix(files, k):
+    shingles = set()
+    incident_matrix = {}
+
+    # Generate k-shingles for each file
+    for file_idx, file in enumerate(files):
+        with open(file, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                line_shingles = generate_k_shingles(line, k)
+                shingles.update(line_shingles)
+                for shingle in line_shingles:
+                    if shingle not in incident_matrix:
+                        incident_matrix[shingle] = [0] * len(files)
+                    incident_matrix[shingle][file_idx] = 1
+
+    # Sort the set of shingles
+    sorted_shingles = sorted(list(shingles))
+
+    return sorted_shingles, incident_matrix
+files = ["file1.txt","file2.txt","file3.txt","file4.txt"]
+k = 4
+num_hashes = 30
+elements=[]
+shingles, incident_matrix = create_incident_matrix(files, k)
+print("Elements - Incident Matrix")
+for key, value in incident_matrix.items():
+  if isinstance(value, list):
+    elements.append(value)
+
+    print(value)
+"""
