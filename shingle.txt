@@ -1,3 +1,18 @@
+def generate_k_shingles(text, k):
+    shingles = []
+    text_length = len(text)
+    for i in range(text_length - k + 1):
+        shingle = text[i:i+k]
+        shingles.append(shingle)
+    return shingles
+
+# Example usage
+text = input('Enter your string : ')
+k = 1
+shingles = generate_k_shingles(text, k)
+print(shingles)
+
+
 ########### For Word ###################
 Document = "abcdabd"
 k = 2
