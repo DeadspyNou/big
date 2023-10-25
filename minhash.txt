@@ -1,94 +1,82 @@
-def read_file(file_path):
-    with open(file_path, 'r') as file:
-        content = file.read()
-    return content
-
-def tokenize_content(content):
-    # Split the content into individual words
-    words = content.split()
-    # Remove punctuation marks and convert words to lowercase (optional)
-    words = [word.strip('.,!?()[]{}"\'').lower() for word in words]
-    return words
-
-def generate_incidence_matrix(file_paths):
-    unique_words = set()
-    file_words = []
-
-    # Step 1: Read each file and tokenize its content
-    for file_path in file_paths:
-        content = read_file(file_path)
-        words = tokenize_content(content)
-        unique_words.update(words)
-        file_words.append(words)
-
-    # Step 2: Create the incidence matrix
-    incidence_matrix = []
-    for i in range(len(file_paths)):
-        incidence_row = []
-        for word in unique_words:
-            # Check if the word is present in the current file
-            incidence_row.append(1 if word in file_words[i] else 0)
-        incidence_matrix.append(incidence_row)
-
-    return incidence_matrix, list(unique_words)
-
-# List of file paths (update with your actual file paths)
-input_files = ["f1.txt", "f2.txt", "f3.txt"]
-
-incidence_matrix, words = generate_incidence_matrix(input_files)
-
-# Print the incidence matrix
-for i, file_path in enumerate(input_files):
-    print(f"Incidence row for {file_path}: {incidence_matrix[i]}")
-
-# Print the list of unique words
-print("Unique words:", words)
-print(incidence_matrix)
-
-def transpose(A):
-    B = [[0 for x in range(len(A))] for y in range(len(A[0]))]
-    for i in range(len(A[0])):
-        for j in range(len(A)):
-            B[i][j] = A[j][i]
-    return B
-
-incidence_matrix = transpose(incidence_matrix)
-
-print(incidence_matrix)
-
-def hash_function1(x):
-    return (x + 1) % 5
-
-def hash_function2(x):
-    return (3 * x + 1) % 5
-
-hash_value_1=[0 for i in range(len(incidence_matrix))]
-hash_value_2=[0 for i in range(len(incidence_matrix))]
-
-for i in range(len(incidence_matrix)):
-    hash_value_1[i]=hash_function1(i)
-for i in range(len(incidence_matrix)):
-    hash_value_2[i]=hash_function2(i)
-
-print(hash_value_1)
-print(hash_value_2)
-
 import numpy as np
-min_hash_sig = np.array([[10000 for i in range(len(incidence_matrix[0]))]]* 2)
+'''
+elements=np.array([[0 ,1 ,0 ,1],
+                  [0 ,1, 0 ,0],
+                  [1 ,0, 0, 1],
+                  [0 ,0, 1 ,0],
+                  [0 ,0 ,1 ,0],
+                  [1 ,0 ,0 ,0]])
+'''
+with_hash=[['inf' ,'inf' ,'inf' ,'inf'],
+           ['inf' ,'inf', 'inf' ,'inf'],
+           ['inf' ,'inf', 'inf', 'inf']]
+h1=[]
+h2=[]
+h3=[]
+for x in range(len(elements)):
+  H_1 = (2 * x + 1) % 43
+  H_2 = (3 * x+2) % 43
+  H_3 = (5*x+2 )% 43
+  h1.append(H_1)
+  h2.append(H_2)
+  h3.append(H_3)
+print('H1 H2 H3')
 
-for i in range(len(incidence_matrix)):
-    for j in range(len(incidence_matrix[0])):
-        if incidence_matrix[i][j]==1:
-            #print(min_hash_sig[0][j],min_hash_sig[1][j])
-            min_hash_sig[0][j]=min(hash_value_1[i],min_hash_sig[0][j])
-
-print(min_hash_sig)
-
-for i in range(len(incidence_matrix)):
-    for k in range(len(incidence_matrix[0])):
-        if incidence_matrix[i][k]==1:
-            #print(min_hash_sig[0][j],min_hash_sig[1][j])
-            min_hash_sig[1][k]=min(hash_value_2[i],min_hash_sig[1][k])
+for i in range(len(elements)):
+  print(h1[i],h2[i],h3[i])
+print('\n\n')
+count=0
+indices=[]
+for i in range(len(elements)):
+  indices.append([index for index, value in enumerate(elements[i]) if value == 1])
 
 
-print(min_hash_sig)
+k = [[i for _ in range(len(item))] for i, item in enumerate(indices, start=1)]
+indextochange=[]
+for i in indices:
+  for j in i:
+    indextochange.append(j)
+
+print('k',k)
+loop=[]
+for i in k:
+  for j in i:
+    loop.append(j-1)
+print("loop",loop)
+print('index',indextochange)
+cc=2
+print('\n\n\n')
+
+
+for p,q in zip(loop,indextochange):
+  for x in range(3):
+    if isinstance(with_hash[x][q], str):
+      if x == 0:
+        with_hash[x][q]=int(h1[p])
+      elif x == 1:
+        with_hash[x][q]=int(h2[p])
+      elif x == 2:
+        with_hash[x][q]=int(h3[p])
+    else:
+      if x==0 and with_hash[x][q]> h1[p]:
+        with_hash[x][q]=h1[p]
+      elif x==1 and with_hash[x][q] > h2[p]:
+        with_hash[x][q]=h2[p]
+      elif x==2 and with_hash[x][q]> h3[p]:
+        with_hash[x][q]=h3[p]
+      else:
+        pass
+
+
+  for i, row in enumerate(with_hash):
+    print(f'H{i+1} {row}')
+    if (i + 1) % 3 == 0:
+        print()
+
+
+def print_nested_list(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            print_nested_list(item)
+        else:
+            print(item)
