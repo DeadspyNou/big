@@ -3,7 +3,7 @@ matrix=np.array([[1,1,0],
                 [1,0,1],
                   [1,1,1]])
 
-#matrix = np.array([[1,1,0],             [1,0,0],             [0,1,1]])
+
 
 matrix=matrix.astype(float)
 divby=[]
@@ -25,17 +25,11 @@ for i in range(len(onebyN)):
 
 print(f"1/N \n{onebyN}\n")
 #Prob Trans Matrix
-A=np.round(np.multiply(beta,matrix) + np.multiply(1-beta,onebyN),3)
+A=np.array((np.multiply(beta,matrix) + np.multiply(1-beta,onebyN)))
 
 print(f"Prob Trans Matrix\n{A}\n")
-vector=np.zeros((row,1))
-vector[row-1]=1
-New = np.array([1/row for i in range(len(matrix))]).reshape(len(matrix),1)
-print("Vector\n",vector)
 
 New = np.array([[0],[1],[0]])
-A = np.array([[0.33,0.467,0.067],[0.33,0.067,0.467],[0.33,0.467,0.467]])
-
 
 error = np.inf
 count = 0
